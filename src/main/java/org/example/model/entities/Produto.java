@@ -14,7 +14,6 @@ public class Produto {
     @Column(name = "descricao") // o nome e outras props da coluna pode ser definido utilizando esta anotação
     private String desc;
     private BigDecimal preco;
-    @Column(name = "data_criacao")
     private LocalDate dataCriacao = LocalDate.now();
     @ManyToOne
     private Categoria categoria;

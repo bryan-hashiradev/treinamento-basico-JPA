@@ -6,20 +6,10 @@ import javax.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class ProdutoDAO {
-    private EntityManager em;
+public class ProdutoDAO extends DAO {
 
     public ProdutoDAO(EntityManager em) {
-        this.em = em;
-    }
-
-    public void save(Produto prod) {
-        em.persist(prod);
-    }
-
-    public List<Produto> list() {
-        String jpql = "SELECT p FROM Produto p";
-        return em.createQuery(jpql, Produto.class).getResultList();
+        super(em, Produto.class);
     }
 
     public List<Produto> findByName(String name) {
@@ -30,7 +20,6 @@ public class ProdutoDAO {
                 .setParameter("nome", name)
                 .getResultList();
     }
-
     public BigDecimal findPriceByName(String name) {
         String jpql = "SELECT p.preco FROM Produto p WHERE p.nome = :nome";
 //        String jpql = "SELECT p FROM Produto p WHERE p.nome = ?1";
@@ -48,9 +37,5 @@ public class ProdutoDAO {
         return em.createQuery(jpql, Produto.class)
                 .setParameter(1, name)
                 .getResultList();
-    }
-
-    public Produto findByID(Long id) {
-        return em.find(Produto.class, id);
     }
 }

@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 public class TesteCadastroProduto {
     public static void main(String[] args) {
         salvaProduto();
-        EntityManager em = JPAUtils.getEntityManager("loja");
+        EntityManager em = JPAUtils.getEntityManager();
         ProdutoDAO produtoDAO = new ProdutoDAO(em);
         CategoriaDAO categoriaDAO = new CategoriaDAO(em);
 
@@ -26,7 +26,7 @@ public class TesteCadastroProduto {
     }
 
     private static void salvaProduto() {
-        EntityManager em = JPAUtils.getEntityManager("loja");
+        EntityManager em = JPAUtils.getEntityManager();
         ProdutoDAO produtoDAO = new ProdutoDAO(em);
         CategoriaDAO categoriaDAO = new CategoriaDAO(em);
 

@@ -4,14 +4,9 @@ import org.example.model.entities.Categoria;
 
 import javax.persistence.EntityManager;
 
-public class CategoriaDAO {
-    private EntityManager em;
+public class CategoriaDAO extends DAO {
 
     public CategoriaDAO(EntityManager em) {
-        this.em = em;
-    }
-
-    public void save(Categoria cat) {
-        em.persist(cat);
+        super(em, Categoria.class);
     }
 }
