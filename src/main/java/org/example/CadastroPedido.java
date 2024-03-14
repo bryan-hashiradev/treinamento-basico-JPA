@@ -35,11 +35,7 @@ public class CadastroPedido {
 
         System.out.println("Valor total dos pedidos = " + pedidoDAO.valorTotalPedidos());
 
-        pedidoDAO.relatorioDeVendas().forEach(line -> {
-            System.out.println("Item: " + line[0]);
-            System.out.println("quantidade_vendida: " + line[1]);
-            System.out.println("data ultima venda: " + line[2]);
-        });
+        pedidoDAO.relatorioDeVendas().forEach(System.out::println);
 
 //        produtoDAO.list().forEach(System.out::println);
         em.close();

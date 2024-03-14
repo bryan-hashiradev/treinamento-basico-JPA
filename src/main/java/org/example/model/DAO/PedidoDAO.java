@@ -1,6 +1,7 @@
 package org.example.model.DAO;
 
 import org.example.model.entities.Pedido;
+import org.example.vo.RelatorioVendasVO;
 
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
@@ -20,14 +21,18 @@ public class PedidoDAO extends DAO{
 
     }
 
-    public List<Object[]> relatorioDeVendas() {
-        String jpql = "SELECT produto.nome, SUM(item.quantidade) as quantidadeTotal, MAX(pedido.dataPedido) " +
+    public List<RelatorioVendasVO> relatorioDeVendas() {
+        //com o select new entende-se que sera instaciado um objeto do tipo especificado no retorno de cada linha
+        String jpql = "SELECT new org.example.vo.RelatorioVendasVO(" +
+                "produto.nome, " +
+                "SUM(item.quantidade) as quantidadeTotal, " +
+                "MAX(pedido.dataPedido)) " +
                 "FROM Pedido pedido " +
                 "JOIN pedido.itens item " +
                 "JOIN item.produto produto " +
                 "GROUP BY produto.nome " +
                 "ORDER BY quantidadeTotal DESC";
         System.out.println(jpql);
-        return em.createQuery(jpql, Object[].class).getResultList();
+        return em.createQuery(jpql, RelatorioVendasVO.class).getResultList();
     }
 }
