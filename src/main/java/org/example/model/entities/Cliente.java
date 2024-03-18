@@ -1,5 +1,7 @@
 package org.example.model.entities;
 
+import org.example.model.DadosPessoais;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,15 +10,14 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String cpf;
-    private String nome;
+    @Embedded
+    private DadosPessoais dadosPessoais;
 
     Cliente() {
     }
 
     public Cliente(String cpf, String nome) {
-        this.cpf = cpf;
-        this.nome = nome;
+        this.dadosPessoais = new DadosPessoais(nome, cpf);
     }
 
     public long getId() {
@@ -28,27 +29,22 @@ public class Cliente {
     }
 
     public String getCpf() {
-        return cpf;
+        return dadosPessoais.getCpf();
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
 
     public String getNome() {
-        return nome;
+
+        return dadosPessoais.getNome();
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
 
     @Override
     public String toString() {
         return "Cliente{" +
                 "id=" + id +
-                ", cpf='" + cpf + '\'' +
-                ", nome='" + nome + '\'' +
+                ", cpf='" + dadosPessoais.getCpf() + '\'' +
+                ", nome='" + dadosPessoais.getNome() + '\'' +
                 '}';
     }
 }

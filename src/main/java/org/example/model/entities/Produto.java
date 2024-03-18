@@ -15,7 +15,10 @@ public class Produto {
     private String desc;
     private BigDecimal preco;
     private LocalDate dataCriacao = LocalDate.now();
-    @ManyToOne
+    // por padrao os relacionamentos ToOne tem o comportamento EAGER
+    // e geram um left join com a tabela relacionada podendo causar
+    // lentidao n e sobrecarga nas consultas por boa pratica sempre utilizar o fetchType lazy
+    @ManyToOne(fetch = FetchType.LAZY)
     private Categoria categoria;
 
     public Produto(){}

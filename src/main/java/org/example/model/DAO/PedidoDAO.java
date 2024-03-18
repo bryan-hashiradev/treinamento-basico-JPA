@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class PedidoDAO extends DAO{
+public class PedidoDAO extends DAO {
     public PedidoDAO(EntityManager em) {
         super(em, Pedido.class);
     }
@@ -34,5 +34,14 @@ public class PedidoDAO extends DAO{
                 "ORDER BY quantidadeTotal DESC";
         System.out.println(jpql);
         return em.createQuery(jpql, RelatorioVendasVO.class).getResultList();
+    }
+
+    //com a utlizacao do fecthType lazy é preciso utlizar consultas planejadas para buscar informações dos relacionamentos
+    // ToOne. Com a  utilizacao do (JOIN FECTH entity.prop) para que a consulta funcione como um FetchType Eager.
+    //Isto é nescessario pois um colateral é a busca das prop lazy depois do fechamento do entity manager
+    public Pedido buscarPedidoCliente(long id) {
+        return em.createQuery("SELECT p FROM Pedido p JOIN FETCH p.cliente WHERE p.id=:id", Pedido.class)
+                .setParameter("id", id)
+                .getSingleResult();
     }
 }

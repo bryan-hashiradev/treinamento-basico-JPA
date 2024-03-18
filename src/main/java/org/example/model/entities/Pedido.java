@@ -14,11 +14,15 @@ public class Pedido {
     private long id;
     @Column(name = "data_pedido")
     LocalDate dataPedido = LocalDate.now();
-    @ManyToOne
+    // por padrao os relacionamentos ToOne tem o comportamento EAGER
+    // e geram um left join com a tabela relacionada podendo causar
+    // lentidao n e sobrecarga nas consultas por boa pratica sempre utilizar o fetchType lazy
+    @ManyToOne(fetch = FetchType.LAZY)
     private Cliente cliente;
     @Column(name = "valor_total")
 
     private BigDecimal valorTotal = BigDecimal.ZERO;
+    //os relacionamentos toMany sao fetchType lazy por padrao
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL) // Relacionamento bi-direcional é preciso informar que é um relacionamento entre entidades ja mapeada por outro atributo. cascade propaga as operações para as entidades envolvidas
     private List<ItemPedido> itens = new ArrayList<>();
 

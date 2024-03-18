@@ -13,7 +13,10 @@ public class ItemPedido {
 
     private BigDecimal precoUnitario;
     private int quantidade;
-    @ManyToOne
+    // por padrao os relacionamentos ToOne tem o comportamento EAGER
+    // e geram um left join com a tabela relacionada podendo causar
+    // lentidao n e sobrecarga nas consultas por boa pratica sempre utilizar o fetchType lazy
+    @ManyToOne(fetch = FetchType.LAZY)
     private Produto produto;
     @ManyToOne
     private Pedido pedido;
